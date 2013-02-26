@@ -14,6 +14,7 @@ import stat
 import tempfile
 import time
 
+# Devuelve la url remota de los ficheros que le pasamos en hash
 def getpath(files, hash):
 	hash2path = {}
 	
@@ -30,9 +31,14 @@ def getpath(files, hash):
 
             hash2path[hash] = path.encode()
         return hash2path[hash]
-        
+
+# Descarga todo el árbol de ficheros y directorios que hay en MegaClient
+# Si el fichero ya existe en local lo sobreescribe. Esto es algo que
+# habrá que mejorar
 def download_all_files():
     result = True
+    # Para cada fichero, obtiene su url remota, comprueba si existe la url local
+    # y lo descarga 
     for file in files.items():
       if 'meta_mac' in file[1]:
 	remote_filepath = getpath(files, file[1]['h'])
@@ -48,20 +54,23 @@ def download_all_files():
     else:
       print '[ERROR] Ha ocurrido algun error al descargar los ficheros'
     return result
-	
+
+# Verifica si un directorio existe en local y si no existe lo crea
 def verify_local_path(path):
   import os.path
   
   acum_path = ''
-  
+  # Divide el path para comprobar si existe cada directorio por separado
   subpath = path.split('/')
   subpath = subpath[:-1]
+  # Si alguno de los path's no exite lo creamos
   for i in subpath:
     acum_path = acum_path + i + '/'
     if not os.path.exists(acum_path):
       print '\tCreando directorio ' + acum_path
       os.mkdir(acum_path)
-  
+
+# Main. Pide el emai y la contraseña del usuario de Mega      
 if __name__ == '__main__':
     email = raw_input("Email [%s]: " % getpass.getuser())
     if not email:
