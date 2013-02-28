@@ -33,8 +33,6 @@ def getpath(files, hash):
         return hash2path[hash]
 
 # Descarga todo el arbol de ficheros y directorios que hay en MegaClient
-# Si el fichero ya existe en local lo sobreescribe. Esto es algo que
-# habra que mejorar
 def download_all_files():
     result = True
     # Para cada fichero, obtiene su url remota, comprueba si existe la url local
@@ -59,6 +57,13 @@ def download_all_files():
     else:
       print '[ERROR] Ha ocurrido algun error al descargar los ficheros'
     return result
+    
+# Sube todo el arbol de ficheros locales a Mega
+def upload_all_files():
+  result = True
+  
+  client.uploadfile('temp/Cloud Drive/file.txt', 2, 'file.txt')
+  return result
 
 # Verifica si un directorio existe en local y si no existe lo crea
 def verify_local_path(path):
@@ -89,3 +94,4 @@ if __name__ == '__main__':
     print
     print
     download_all_files()
+    upload_all_files()
