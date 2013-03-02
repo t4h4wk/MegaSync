@@ -80,8 +80,27 @@ def verify_local_path(path):
       print '\tCreando directorio ' + acum_path
       os.mkdir(acum_path)
 
+# Muestra el listado de directorios locales
+def show_folders(path):
+  print '[*] Directorios locales'
+  for path, dir, name in os.walk(path):
+    print '\t' + path
+
+# Muestra el listado de ficheros locales    
+def show_files(path):
+  print '[*] Ficheros locales'
+  for path, dir, name in os.walk(path):
+    for n in name:
+      print '\t' + path + '/' + n
+
+
 # Main. Pide el email y el password del usuario de Mega      
 if __name__ == '__main__':
+
+    show_folders('temp')
+    show_files('temp')
+    
+"""
     email = raw_input("Email [%s]: " % getpass.getuser())
     if not email:
         email = getpass.getuser()
@@ -95,3 +114,5 @@ if __name__ == '__main__':
     print
     download_all_files()
     upload_all_files()
+"""
+
